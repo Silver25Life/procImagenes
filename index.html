@@ -1,12 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AR Trivia Países</title>
+
+	<!-- A-Frame y MindAR -->
 	<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+	<!-- Botón para mostrar trivia -->
+	<button id="triviaButton">Mostrar Trivia</button>
+
+	<!-- Modal -->
+	<div id="triviaModal" class="modal">
+		<div class="modal-content">
+			<span id="closeModal" class="close">&times;</span>
+			<p id="triviaText"></p>
+		</div>
+	</div>
+
+	<!-- Escena AR -->
 	<a-scene mindar-image="imageTargetSrc: pais.mind; color-space: sRGB"
 		renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
 		device-orientation-permission-ui="enabled: false">
@@ -18,19 +38,19 @@
 
 		<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-		<!-- Target bandera de México -->
-		<a-entity mindar-image-target="targetIndex: 0">
-			<a-plane src="#mexicoImg" position="0 0 0" height="1" width="1.78" rotation="0 0 0">
-			</a-plane>
+		<!-- Targets -->
+		<a-entity mindar-image-target="targetIndex: 0" id="mexicoTarget">
+			<a-plane src="#mexicoImg" position="0 0 0" height="1" width="1.78"></a-plane>
 		</a-entity>
 
-		<!-- Target bandera de Estados Unidos -->
-		<a-entity mindar-image-target="targetIndex: 1">
-			<a-plane src="#usaImg" position="0 0 0" height="1" width="1.78" rotation="0 0 0">
-			</a-plane>
+		<a-entity mindar-image-target="targetIndex: 1" id="usaTarget">
+			<a-plane src="#usaImg" position="0 0 0" height="1" width="1.78"></a-plane>
 		</a-entity>
 
 	</a-scene>
+
+	<!-- JS -->
+	<script src="app.js"></script>
 </body>
 
 </html>
