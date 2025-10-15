@@ -12,69 +12,6 @@ body {
 	height: 100vh;
 }
 
-/* Botones de simulación */
-.simulacion-buttons {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	z-index: 10000;
-	background: rgba(255, 255, 255, 0.95);
-	padding: 12px;
-	border-radius: 10px;
-	border: 2px solid #2196f3;
-	pointer-events: auto;
-	max-width: 200px;
-}
-
-.simulacion-buttons strong {
-	display: block;
-	margin-bottom: 8px;
-	color: #333;
-	font-size: 14px;
-}
-
-.simulacion-buttons button {
-	display: block;
-	margin: 6px 0;
-	padding: 8px 12px;
-	cursor: pointer;
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	font-size: 12px;
-	width: 100%;
-	transition: background-color 0.3s;
-}
-
-.simulacion-buttons button:hover {
-	background-color: #45a049;
-}
-
-#simularMexico {
-	background-color: #2196f3;
-}
-
-#simularMexico:hover {
-	background-color: #1976d2;
-}
-
-#simularUSA {
-	background-color: #f44336;
-}
-
-#simularUSA:hover {
-	background-color: #d32f2f;
-}
-
-#ocultarTarget {
-	background-color: #ff9800;
-}
-
-#ocultarTarget:hover {
-	background-color: #f57c00;
-}
-
 /* Botón de trivia */
 #triviaButton {
 	position: absolute;
@@ -276,20 +213,6 @@ a-scene {
 
 /* Media Queries para tablets y desktop */
 @media (min-width: 768px) {
-	.simulacion-buttons {
-		max-width: 220px;
-		padding: 15px;
-	}
-
-	.simulacion-buttons strong {
-		font-size: 16px;
-	}
-
-	.simulacion-buttons button {
-		font-size: 14px;
-		padding: 10px 15px;
-	}
-
 	.modal-content {
 		margin: 10% auto;
 		padding: 30px;
@@ -372,16 +295,6 @@ a-scene {
 		font-size: 24px;
 		top: 8px;
 		right: 12px;
-	}
-
-	.simulacion-buttons {
-		max-width: 180px;
-		padding: 10px;
-	}
-
-	.simulacion-buttons button {
-		font-size: 11px;
-		padding: 6px 10px;
 	}
 }
 
