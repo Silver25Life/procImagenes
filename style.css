@@ -1,50 +1,178 @@
-/* Botón */
-#triviaButton {
+/* Reset básico */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	overflow: hidden;
+	width: 100vw;
+	height: 100vh;
+}
+
+/* Botones de simulación */
+.simulacion-buttons {
 	position: absolute;
-	bottom: 20px;
-	left: 50%;
-	transform: translateX(-50%);
-	padding: 12px 25px;
-	font-size: 18px;
-	display: none;
+	top: 10px;
+	left: 10px;
+	z-index: 10000;
+	background: rgba(255, 255, 255, 0.9);
+	padding: 15px;
+	border-radius: 10px;
+	border: 2px solid #2196f3;
+	pointer-events: auto;
+}
+
+.simulacion-buttons strong {
+	display: block;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.simulacion-buttons button {
+	display: block;
+	margin: 8px 0;
+	padding: 10px 15px;
 	cursor: pointer;
-	background-color: #2196f3;
+	background-color: #4CAF50;
 	color: white;
 	border: none;
-	border-radius: 8px;
+	border-radius: 5px;
+	font-size: 14px;
+	width: 100%;
+	transition: background-color 0.3s;
+}
+
+.simulacion-buttons button:hover {
+	background-color: #45a049;
+}
+
+#simularMexico {
+	background-color: #2196f3;
+}
+
+#simularMexico:hover {
+	background-color: #1976d2;
+}
+
+#simularUSA {
+	background-color: #f44336;
+}
+
+#simularUSA:hover {
+	background-color: #d32f2f;
+}
+
+#ocultarTarget {
+	background-color: #ff9800;
+}
+
+#ocultarTarget:hover {
+	background-color: #f57c00;
+}
+
+/* Botón de trivia */
+#triviaButton {
+	position: absolute;
+	bottom: 30px;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 15px 30px;
+	font-size: 18px;
+	font-weight: bold;
+	display: none;
+	cursor: pointer;
+	background-color: #9c27b0;
+	color: white;
+	border: none;
+	border-radius: 25px;
+	z-index: 10000;
+	pointer-events: auto;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	transition: all 0.3s ease;
+}
+
+#triviaButton:hover {
+	background-color: #7b1fa2;
+	transform: translateX(-50%) scale(1.05);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+#triviaButton:active {
+	transform: translateX(-50%) scale(0.95);
 }
 
 /* Modal */
 .modal {
 	display: none;
 	position: fixed;
-	z-index: 1000;
+	z-index: 10001;
 	left: 0;
 	top: 0;
 	width: 100%;
 	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(5px);
 }
 
 .modal-content {
-	background-color: #fefefe;
-	margin: 15% auto;
-	padding: 20px;
-	border-radius: 10px;
-	width: 80%;
-	max-width: 400px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	margin: 20% auto;
+	padding: 30px;
+	border-radius: 15px;
+	width: 85%;
+	max-width: 500px;
 	text-align: center;
+	color: white;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	position: relative;
+	animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+	from {
+		opacity: 0;
+		transform: translateY(-50px) scale(0.8);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.modal-content p {
+	font-size: 20px;
+	line-height: 1.5;
+	margin: 20px 0;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	color: white;
+	font-size: 32px;
 	font-weight: bold;
 	cursor: pointer;
+	transition: color 0.3s;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .close:hover {
-	color: black;
+	color: #ffeb3b;
+	transform: scale(1.1);
+}
+
+/* A-Frame Scene */
+a-scene {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
 }

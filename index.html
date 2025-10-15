@@ -15,6 +15,14 @@
 </head>
 
 <body>
+	<!-- Botones de simulación -->
+	<div class="simulacion-buttons">
+		<strong>Prueba sin cámara:</strong>
+		<button id="simularMexico">Simular México</button>
+		<button id="simularUSA">Simular USA</button>
+		<button id="ocultarTarget">Ocultar Target</button>
+	</div>
+
 	<!-- Botón para mostrar trivia -->
 	<button id="triviaButton">Mostrar Trivia</button>
 
@@ -27,33 +35,29 @@
 	</div>
 
 	<!-- Escena AR -->
-	<a-scene mindar-image="imageTargetSrc: pais.mind; color-space: sRGB"
-		renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
-		device-orientation-permission-ui="enabled: false">
+	<a-scene mindar-image="imageTargetSrc: pais.mind; autoStart: true; maxTrack: 2;" vr-mode-ui="enabled: false"
+		device-orientation-permission-ui="enabled: false" embedded>
 
 		<a-assets>
-			<img id="mexicoImg" src="mexico.jpg" />
-			<img id="usaImg" src="usa.jpg" />
+			<img id="mexicoImg" src="https://cdn.pixabay.com/photo/2012/04/10/23/03/mexico-26817_640.png"
+				crossorigin="anonymous" />
+			<img id="usaImg"
+				src="https://cdn.pixabay.com/photo/2017/03/14/21/00/american-flag-2144392_640.png"
+				crossorigin="anonymous" />
 		</a-assets>
 
-		<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+		<a-camera position="0 0 0" look-controls="enabled: false" active="true"></a-camera>
 
 		<!-- Targets -->
 		<a-entity mindar-image-target="targetIndex: 0" id="mexicoTarget">
-			<a-plane src="#mexicoImg" position="0 0 0" height="1" width="1.78"></a-plane>
+			<a-plane src="#mexicoImg" position="0 0 0" height="0.5" width="0.8" rotation="0 0 0"></a-plane>
 		</a-entity>
 
 		<a-entity mindar-image-target="targetIndex: 1" id="usaTarget">
-			<a-plane src="#usaImg" position="0 0 0" height="1" width="1.78"></a-plane>
+			<a-plane src="#usaImg" position="0 0 0" height="0.5" width="0.8" rotation="0 0 0"></a-plane>
 		</a-entity>
 
 	</a-scene>
-	<!-- Agrega esto temporalmente para testing -->
-	<div style="position: absolute; top: 10px; left: 10px; z-index: 1000;">
-		<button onclick="simularTarget(0)">Simular México</button>
-		<button onclick="simularTarget(1)">Simular USA</button>
-		<button onclick="simularTargetLost()">Ocultar Target</button>
-	</div>
 
 	<!-- JS -->
 	<script src="app.js"></script>
