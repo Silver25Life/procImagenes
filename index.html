@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>AR.js Bandera de México</title>
+	<title>AR.js Ejemplo con Hiro</title>
 
 	<!-- A-Frame -->
 	<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
@@ -16,14 +16,14 @@
 
 	<a-scene embedded arjs="trackingMethod: best;" vr-mode-ui="enabled: false">
 
-		<!-- Marcador para la bandera de México -->
-		<a-marker type="pattern" url="pattern-mexico.patt">
+		<!-- Marcador de prueba Hiro -->
+		<a-marker preset="hiro">
 
-			<!-- Modelo 3D de ejemplo (puedes reemplazarlo por tu glTF) -->
+			<!-- Modelo 3D de ejemplo -->
 			<a-box position="0 0.5 0" rotation="0 45 0" color="#4CC3D9" scale="0.5 0.5 0.5"></a-box>
 
-			<!-- Texto sobre la bandera -->
-			<a-text value="¡Viva México!" position="0 1 0" rotation="0 0 0" color="#006847" align="center"
+			<!-- Texto sobre el marcador -->
+			<a-text value="¡AR funciona!" position="0 1 0" rotation="0 0 0" color="#FF0000" align="center"
 				width="2">
 			</a-text>
 
