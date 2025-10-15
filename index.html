@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--DOCTYPE html>
 <html>
 
 <head>
@@ -12,9 +12,30 @@
 <body style="margin: 0; overflow: hidden;">
 	<a-scene embedded arjs="sourceType: webcam;">
 
-		<!-- Marcador personalizado: pattern-mexico.patt -->
 		<a-marker type="pattern" url="markers/pattern-mexico.patt">
-			<!-- Ejemplo: un cubo rojo sobre el marcador -->
+			<a-box position="0 0.5 0" material="color: red;"></a-box>
+		</a-marker>
+
+		<a-entity camera></a-entity>
+	</a-scene>
+</body>
+
+</html-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>AR.js Example</title>
+	<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+	<a-scene embedded arjs="trackingMethod: best;">
+		<a-marker preset="hiro">
 			<a-box position="0 0.5 0" material="color: red;"></a-box>
 		</a-marker>
 
@@ -23,26 +44,3 @@
 </body>
 
 </html>
-
-<!--DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>AR.js Example</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="trackingMethod: best;">
-      <!-- Marcador Hiro ->
-      <a-marker preset="hiro">
-        <!-- Cubo 3D como ejemplo ->
-        <a-box position="0 0.5 0" material="color: red;"></a-box>
-      </a-marker>
-
-      <!-- Cámara AR.js ->
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
-</html-->
