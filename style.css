@@ -119,10 +119,10 @@ body {
 
 .modal-content {
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	margin: 20% auto;
+	margin: 10% auto;
 	padding: 30px;
 	border-radius: 15px;
-	width: 85%;
+	width: 90%;
 	max-width: 500px;
 	text-align: center;
 	color: white;
@@ -143,11 +143,94 @@ body {
 	}
 }
 
-.modal-content p {
-	font-size: 20px;
-	line-height: 1.5;
-	margin: 20px 0;
+/* Pregunta */
+#preguntaText {
+	font-size: 22px;
+	margin-bottom: 25px;
+	line-height: 1.4;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de opciones */
+.opciones-container {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin: 25px 0;
+}
+
+/* Botones de opciones */
+.opcion-btn {
+	display: flex;
+	align-items: center;
+	padding: 15px;
+	background: rgba(255, 255, 255, 0.1);
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 10px;
+	color: white;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-align: left;
+	backdrop-filter: blur(10px);
+}
+
+.opcion-btn:hover {
+	background: rgba(255, 255, 255, 0.2);
+	border-color: rgba(255, 255, 255, 0.5);
+	transform: translateX(5px);
+}
+
+.opcion-btn.correcta {
+	background: linear-gradient(135deg, #4CAF50, #45a049);
+	border-color: #4CAF50;
+}
+
+.opcion-btn.incorrecta {
+	background: linear-gradient(135deg, #f44336, #d32f2f);
+	border-color: #f44336;
+}
+
+.opcion-letra {
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 15px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.opcion-texto {
+	flex: 1;
+	font-size: 16px;
+}
+
+/* Resultado */
+.resultado {
+	margin-top: 20px;
+	padding: 15px;
+	border-radius: 10px;
+	font-size: 18px;
+	font-weight: bold;
+	min-height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.resultado.correcto {
+	background: rgba(76, 175, 80, 0.2);
+	border: 2px solid #4CAF50;
+	color: #4CAF50;
+}
+
+.resultado.incorrecto {
+	background: rgba(244, 67, 54, 0.2);
+	border: 2px solid #f44336;
+	color: #f44336;
 }
 
 .close {

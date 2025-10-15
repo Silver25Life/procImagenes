@@ -26,11 +26,26 @@
 	<!-- Botón para mostrar trivia -->
 	<button id="triviaButton">Mostrar Trivia</button>
 
-	<!-- Modal -->
+	<!-- Modal de Trivia -->
 	<div id="triviaModal" class="modal">
 		<div class="modal-content">
 			<span id="closeModal" class="close">&times;</span>
-			<p id="triviaText"></p>
+			<h3 id="preguntaText"></h3>
+			<div class="opciones-container">
+				<button class="opcion-btn" data-opcion="1">
+					<span class="opcion-letra">A</span>
+					<span class="opcion-texto" id="opcion1"></span>
+				</button>
+				<button class="opcion-btn" data-opcion="2">
+					<span class="opcion-letra">B</span>
+					<span class="opcion-texto" id="opcion2"></span>
+				</button>
+				<button class="opcion-btn" data-opcion="3">
+					<span class="opcion-letra">C</span>
+					<span class="opcion-texto" id="opcion3"></span>
+				</button>
+			</div>
+			<div id="resultado" class="resultado"></div>
 		</div>
 	</div>
 
@@ -39,11 +54,8 @@
 		device-orientation-permission-ui="enabled: false" embedded>
 
 		<a-assets>
-			<img id="mexicoImg" src="https://cdn.pixabay.com/photo/2012/04/10/23/03/mexico-26817_640.png"
-				crossorigin="anonymous" />
-			<img id="usaImg"
-				src="https://cdn.pixabay.com/photo/2017/03/14/21/00/american-flag-2144392_640.png"
-				crossorigin="anonymous" />
+			<img id="mexicoImg" src="mexico.jpg" crossorigin="anonymous" />
+			<img id="usaImg" src="usa.jpg" crossorigin="anonymous" />
 		</a-assets>
 
 		<a-camera position="0 0 0" look-controls="enabled: false" active="true"></a-camera>

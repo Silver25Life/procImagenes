@@ -3,40 +3,111 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// Variables globales
 	let activeTarget = null;
+	let preguntaActual = null;
 	const triviaButton = document.getElementById("triviaButton");
 	const triviaModal = document.getElementById("triviaModal");
-	const triviaText = document.getElementById("triviaText");
+	const preguntaText = document.getElementById("preguntaText");
+	const opcion1 = document.getElementById("opcion1");
+	const opcion2 = document.getElementById("opcion2");
+	const opcion3 = document.getElementById("opcion3");
 	const closeModal = document.getElementById("closeModal");
+	const resultadoDiv = document.getElementById("resultado");
 
-	// Verificar que todos los elementos existan
-	console.log("🔍 Verificando elementos del DOM:");
-	console.log("- triviaButton:", triviaButton);
-	console.log("- triviaModal:", triviaModal);
-	console.log("- triviaText:", triviaText);
-	console.log("- closeModal:", closeModal);
-
-	if (!triviaButton || !triviaModal || !triviaText || !closeModal) {
-		console.error("❌ Error: No se encontraron todos los elementos del DOM");
-		return;
-	}
-
-	console.log("✅ Todos los elementos del DOM encontrados");
-
-	// Base de datos de trivias
+	// Base de datos de trivias con opciones múltiples
 	const trivias = {
-		0: [
-			"¿Cuál es la capital de México? 🇲🇽\n\nRespuesta: Ciudad de México",
-			"¿Cuál es el platillo típico de México? 🌮\n\nRespuesta: Tacos",
-			"¿Cuál es el himno nacional de México? 🎵\n\nRespuesta: Himno Nacional Mexicano",
-			"¿En qué año México ganó su independencia? 📅\n\nRespuesta: 1810",
-			"¿Cuál es la moneda de México? 💰\n\nRespuesta: Peso Mexicano"
+		0: [ // México
+			{
+				pregunta: "¿Cuál es la capital de México?",
+				opciones: [
+					"Guadalajara",
+					"Ciudad de México",
+					"Monterrey"
+				],
+				correcta: 1
+			},
+			{
+				pregunta: "¿Cuál es el platillo típico de México?",
+				opciones: [
+					"Pizza",
+					"Sushi",
+					"Tacos"
+				],
+				correcta: 2
+			},
+			{
+				pregunta: "¿En qué año México ganó su independencia?",
+				opciones: [
+					"1776",
+					"1810",
+					"1848"
+				],
+				correcta: 1
+			},
+			{
+				pregunta: "¿Cuál es la moneda de México?",
+				opciones: [
+					"Dólar",
+					"Euro",
+					"Peso Mexicano"
+				],
+				correcta: 2
+			},
+			{
+				pregunta: "¿Qué celebra México el 16 de septiembre?",
+				opciones: [
+					"Día de la Revolución",
+					"Día de la Independencia",
+					"Día de la Bandera"
+				],
+				correcta: 1
+			}
 		],
-		1: [
-			"¿Cuál es la capital de Estados Unidos? 🇺🇸\n\nRespuesta: Washington D.C.",
-			"¿Cuál es el símbolo nacional? 🦅\n\nRespuesta: Águila calva",
-			"¿Cuál es el plato típico? 🍔\n\nRespuesta: Hamburguesa",
-			"¿Cuántas estrellas tiene la bandera? ⭐\n\nRespuesta: 50 estrellas",
-			"¿Quién fue el primer presidente? 👨‍💼\n\nRespuesta: George Washington"
+		1: [ // USA
+			{
+				pregunta: "¿Cuál es la capital de Estados Unidos?",
+				opciones: [
+					"Nueva York",
+					"Washington D.C.",
+					"Los Ángeles"
+				],
+				correcta: 1
+			},
+			{
+				pregunta: "¿Cuál es el símbolo nacional de USA?",
+				opciones: [
+					"El oso pardo",
+					"El águila calva",
+					"El búho"
+				],
+				correcta: 1
+			},
+			{
+				pregunta: "¿Cuántas estrellas tiene la bandera de USA?",
+				opciones: [
+					"48",
+					"50",
+					"52"
+				],
+				correcta: 1
+			},
+			{
+				pregunta: "¿Quién fue el primer presidente de USA?",
+				opciones: [
+					"Thomas Jefferson",
+					"Abraham Lincoln",
+					"George Washington"
+				],
+				correcta: 2
+			},
+			{
+				pregunta: "¿En qué continente se encuentra USA?",
+				opciones: [
+					"Europa",
+					"América del Norte",
+					"Asia"
+				],
+				correcta: 1
+			}
 		]
 	};
 
@@ -74,33 +145,86 @@ document.addEventListener("DOMContentLoaded", function() {
 		ocultarBotonTrivia();
 	});
 
+	// ===== FUNCIONES DE TRIVIA CON OPCIONES =====
+	function mostrarTrivia() {
+		if (activeTarget === null || activeTarget === undefined) {
+			console.log("❌ No hay target activo");
+			return;
+		}
+
+		const preguntas = trivias[activeTarget];
+		if (!preguntas || preguntas.length === 0) {
+			console.error("❌ No hay preguntas para este target");
+			return;
+		}
+
+		// Seleccionar pregunta aleatoria
+		const randomIndex = Math.floor(Math.random() * preguntas.length);
+		preguntaActual = preguntas[randomIndex];
+
+		// Mostrar pregunta y opciones
+		preguntaText.textContent = preguntaActual.pregunta;
+		opcion1.textContent = preguntaActual.opciones[0];
+		opcion2.textContent = preguntaActual.opciones[1];
+		opcion3.textContent = preguntaActual.opciones[2];
+
+		// Resetear estilos
+		resultadoDiv.textContent = "";
+		resultadoDiv.className = "resultado";
+
+		const botonesOpcion = document.querySelectorAll('.opcion-btn');
+		botonesOpcion.forEach(btn => {
+			btn.className = 'opcion-btn';
+			btn.disabled = false;
+		});
+
+		// Mostrar modal
+		triviaModal.style.display = "block";
+		console.log("✅ Trivia mostrada:", preguntaActual.pregunta);
+	}
+
+	function verificarRespuesta(opcionSeleccionada) {
+		if (!preguntaActual) return;
+
+		const botonesOpcion = document.querySelectorAll('.opcion-btn');
+		const opcionCorrecta = preguntaActual.correcta;
+
+		// Deshabilitar todos los botones
+		botonesOpcion.forEach(btn => {
+			btn.disabled = true;
+		});
+
+		// Mostrar resultado
+		if (opcionSeleccionada === opcionCorrecta) {
+			resultadoDiv.textContent = "✅ ¡Correcto!";
+			resultadoDiv.className = "resultado correcto";
+			botonesOpcion[opcionSeleccionada].classList.add('correcta');
+			console.log("🎉 Respuesta correcta");
+		} else {
+			resultadoDiv.textContent = "❌ Incorrecto";
+			resultadoDiv.className = "resultado incorrecto";
+			botonesOpcion[opcionSeleccionada].classList.add('incorrecta');
+			botonesOpcion[opcionCorrecta].classList.add('correcta');
+			console.log("💀 Respuesta incorrecta");
+		}
+	}
+
+	// ===== EVENT LISTENERS PARA OPCIONES =====
+	document.querySelectorAll('.opcion-btn').forEach(btn => {
+		btn.addEventListener('click', function() {
+			const opcion = parseInt(this.getAttribute('data-opcion')) - 1;
+			console.log(`📝 Opción seleccionada: ${opcion + 1}`);
+			verificarRespuesta(opcion);
+		});
+	});
+
 	// ===== BOTÓN DE TRIVIA =====
 	triviaButton.addEventListener("click", function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-
 		console.log("🔄 Botón de trivia clickeado");
-		console.log("🎯 Target activo actual:", activeTarget);
-
-		if (activeTarget !== null && activeTarget !== undefined) {
-			const preguntas = trivias[activeTarget];
-			if (preguntas && preguntas.length > 0) {
-				const randomIndex = Math.floor(Math.random() * preguntas.length);
-				const triviaSeleccionada = preguntas[randomIndex];
-				triviaText.textContent = triviaSeleccionada;
-				triviaModal.style.display = "block";
-				console.log("✅ Modal de trivia mostrado");
-				console.log("📝 Trivia:", triviaSeleccionada);
-			} else {
-				console.error("❌ No hay preguntas para el target:", activeTarget);
-				triviaText.textContent = "Error: No hay preguntas disponibles para este país.";
-				triviaModal.style.display = "block";
-			}
-		} else {
-			console.log("❌ No hay target activo para mostrar trivia");
-			triviaText.textContent = "Por favor, detecta un país primero antes de mostrar trivia.";
-			triviaModal.style.display = "block";
-		}
+		console.log("🎯 Target activo:", activeTarget);
+		mostrarTrivia();
 	});
 
 	// ===== CERRAR MODAL =====
@@ -151,7 +275,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	// ===== INICIALIZACIÓN COMPLETADA =====
-	console.log("✅ Aplicación AR Trivia inicializada correctamente");
+	console.log("✅ Aplicación AR Trivia con opciones múltiples inicializada");
 	console.log("💡 Usa los botones de simulación para probar sin cámara");
-	console.log("📱 O apunta la cámara a las imágenes target para AR real");
 });
