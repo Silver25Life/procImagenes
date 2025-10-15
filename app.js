@@ -111,11 +111,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		]
 	};
 
-	// ===== CONFIGURACIÓN DE BOTONES DE SIMULACIÓN =====
-	const simularMexico = document.getElementById("simularMexico");
-	const simularUSA = document.getElementById("simularUSA");
-	const ocultarTarget = document.getElementById("ocultarTarget");
-
 	function mostrarBotonTrivia() {
 		triviaButton.style.display = "block";
 		console.log("🟢 Botón de trivia mostrado");
@@ -125,25 +120,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		triviaButton.style.display = "none";
 		console.log("🔴 Botón de trivia ocultado");
 	}
-
-	// Event listeners para botones de simulación
-	simularMexico.addEventListener("click", function() {
-		console.log("🇲🇽 Simulando detección de México");
-		activeTarget = 0;
-		mostrarBotonTrivia();
-	});
-
-	simularUSA.addEventListener("click", function() {
-		console.log("🇺🇸 Simulando detección de USA");
-		activeTarget = 1;
-		mostrarBotonTrivia();
-	});
-
-	ocultarTarget.addEventListener("click", function() {
-		console.log("👻 Ocultando target simulado");
-		activeTarget = null;
-		ocultarBotonTrivia();
-	});
 
 	// ===== FUNCIONES DE TRIVIA CON OPCIONES =====
 	function mostrarTrivia() {
@@ -241,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	});
 
-	// ===== MINDAR EVENTS - VERSIÓN CORREGIDA =====
+	// ===== MINDAR EVENTS =====
 	const scene = document.querySelector("a-scene");
 
 	if (scene) {
@@ -327,7 +303,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	// ===== INICIALIZACIÓN COMPLETADA =====
-	console.log("✅ Aplicación AR Trivia con opciones múltiples inicializada");
-	console.log("💡 Usa los botones de simulación para probar sin cámara");
-	console.log("📱 O apunta la cámara a las banderas para AR real");
+	console.log("✅ Aplicación AR Trivia inicializada");
+	console.log("📱 Apunta la cámara a las banderas para comenzar");
 });
