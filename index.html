@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>AR Trivia Países</title>
 
 	<!-- A-Frame y MindAR -->
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<!-- Botones de simulación -->
+	<!-- Botones de simulación ->
 	<div class="simulacion-buttons">
 		<strong>Prueba sin cámara:</strong>
 		<button id="simularMexico">Simular México</button>
@@ -50,8 +50,8 @@
 	</div>
 
 	<!-- Escena AR -->
-	<a-scene mindar-image="imageTargetSrc: pais.mind; autoStart: true; maxTrack: 2;" vr-mode-ui="enabled: false"
-		device-orientation-permission-ui="enabled: false" embedded>
+	<a-scene mindar-image="imageTargetSrc: pais.mind; autoStart: true; maxTrack: 2; uiScanning: no; uiError: no;"
+		vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
 
 		<a-assets>
 			<img id="mexicoImg" src="mexico.jpg" crossorigin="anonymous" />
