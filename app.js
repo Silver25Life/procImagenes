@@ -19,27 +19,30 @@ document.addEventListener("DOMContentLoaded", () => {
 		]
 	};
 
-	// Obtener referencias a los targets (A-Frame entities)
-	const mexicoTarget = document.querySelector("#mexicoTarget");
-	const usaTarget = document.querySelector("#usaTarget");
+	// Obtener la escena de A-Frame
+	const scene = document.querySelector("a-scene");
 
-	// Eventos correctos de MindAR
-	mexicoTarget.addEventListener("mindar-image-target-found", () => {
-		activeTarget = 0;
-		triviaButton.style.display = "block";
-	});
-	mexicoTarget.addEventListener("mindar-image-target-lost", () => {
-		activeTarget = null;
-		triviaButton.style.display = "none";
-	});
+	// Esperar a que la escena esté cargada
+	scene.addEventListener("loaded", () => {
+		// Obtener el sistema MindAR
+		const mindarSystem = scene.systems["mindar-image-system"];
 
-	usaTarget.addEventListener("mindar-image-target-found", () => {
-		activeTarget = 1;
-		triviaButton.style.display = "block";
-	});
-	usaTarget.addEventListener("mindar-image-target-lost", () => {
-		activeTarget = null;
-		triviaButton.style.display = "none";
+		// Esperar a que MindAR esté listo
+		scene.addEventListener("mindar-target-found", (event) => {
+			const targetIndex = event.detail.targetIndex;
+			activeTarget = targetIndex;
+			triviaButton.style.display = "block";
+			console.log("Target encontrado:", targetIndex);
+		});
+
+		scene.addEventListener("mindar-target-lost", (event) => {
+			const targetIndex = event.detail.targetIndex;
+			if (activeTarget === targetIndex) {
+				activeTarget = null;
+				triviaButton.style.display = "none";
+			}
+			console.log("Target perdido:", targetIndex);
+		});
 	});
 
 	// Mostrar trivia al hacer clic
@@ -49,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const randomIndex = Math.floor(Math.random() * preguntas.length);
 			triviaText.textContent = preguntas[randomIndex];
 			triviaModal.style.display = "block";
+			console.log("Mostrando trivia para target:", activeTarget);
 		}
 	});
 
@@ -64,4 +68,3 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 });
-
