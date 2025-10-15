@@ -14,23 +14,25 @@
 
 <body style="margin:0; overflow:hidden;">
 
-	<a-scene embedded arjs="trackingMethod: best;" vr-mode-ui="enabled: false">
+	<a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+		vr-mode-ui="enabled: false">
 
 		<!-- Marcador de prueba Hiro -->
 		<a-marker preset="hiro">
 
-			<!-- Modelo 3D de ejemplo -->
+			<!-- Modelo 3D -->
 			<a-box position="0 0.5 0" rotation="0 45 0" color="#4CC3D9" scale="0.5 0.5 0.5"></a-box>
 
-			<!-- Texto sobre el marcador -->
+			<!-- Texto -->
 			<a-text value="¡AR funciona!" position="0 1 0" rotation="0 0 0" color="#FF0000" align="center"
 				width="2">
 			</a-text>
 
 		</a-marker>
 
-		<!-- Cámara AR -->
-		<a-entity camera></a-entity>
+		<!-- Cámara con FOV correcto -->
+		<a-entity camera position="0 0 0" look-controls="enabled: false"></a-entity>
+
 	</a-scene>
 
 </body>
