@@ -1,3 +1,17 @@
+// Funciones para testing sin cámara
+window.simularTarget = (targetIndex) => {
+	activeTarget = targetIndex;
+	triviaButton.style.display = "block";
+	console.log("Target simulado:", targetIndex);
+};
+
+window.simularTargetLost = () => {
+	activeTarget = null;
+	triviaButton.style.display = "none";
+	console.log("Target perdido");
+};
+
+
 document.addEventListener("DOMContentLoaded", () => {
 	const triviaButton = document.getElementById("triviaButton");
 	const triviaModal = document.getElementById("triviaModal");
