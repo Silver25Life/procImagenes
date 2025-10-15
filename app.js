@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	let activeTarget = null;
 
-	// Trivias por país
 	const trivias = {
 		0: [
 			"¿Cuál es la capital de México? Respuesta: Ciudad de México",
@@ -20,30 +19,30 @@ document.addEventListener("DOMContentLoaded", () => {
 		]
 	};
 
-	// Obtener referencias a los targets
+	// Obtener referencias a los targets (A-Frame entities)
 	const mexicoTarget = document.querySelector("#mexicoTarget");
 	const usaTarget = document.querySelector("#usaTarget");
 
-	// Función para activar botón
-	function showButton(index) {
-		activeTarget = index;
+	// Eventos correctos de MindAR
+	mexicoTarget.addEventListener("mindar-image-target-found", () => {
+		activeTarget = 0;
 		triviaButton.style.display = "block";
-	}
-
-	// Función para ocultar botón
-	function hideButton() {
+	});
+	mexicoTarget.addEventListener("mindar-image-target-lost", () => {
 		activeTarget = null;
 		triviaButton.style.display = "none";
-	}
+	});
 
-	// Eventos MindAR
-	mexicoTarget.addEventListener("targetFound", () => showButton(0));
-	mexicoTarget.addEventListener("targetLost", hideButton);
+	usaTarget.addEventListener("mindar-image-target-found", () => {
+		activeTarget = 1;
+		triviaButton.style.display = "block";
+	});
+	usaTarget.addEventListener("mindar-image-target-lost", () => {
+		activeTarget = null;
+		triviaButton.style.display = "none";
+	});
 
-	usaTarget.addEventListener("targetFound", () => showButton(1));
-	usaTarget.addEventListener("targetLost", hideButton);
-
-	// Mostrar trivia
+	// Mostrar trivia al hacer clic
 	triviaButton.addEventListener("click", () => {
 		if (activeTarget !== null) {
 			const preguntas = trivias[activeTarget];
