@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>AR.js Ejemplo con Hiro</title>
+	<title>AR.js Bandera de México</title>
 
 	<!-- A-Frame -->
 	<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
@@ -14,25 +14,23 @@
 
 <body style="margin:0; overflow:hidden;">
 
-	<a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-		vr-mode-ui="enabled: false">
+	<a-scene embedded arjs="trackingMethod: best;" vr-mode-ui="enabled: false">
 
-		<!-- Marcador de prueba Hiro -->
-		<a-marker preset="hiro">
+		<!-- Marcador para la bandera de México -->
+		<a-marker type="pattern" url="pattern-mexico.patt">
 
-			<!-- Modelo 3D -->
+			<!-- Modelo 3D de ejemplo (puedes reemplazarlo por tu glTF) -->
 			<a-box position="0 0.5 0" rotation="0 45 0" color="#4CC3D9" scale="0.5 0.5 0.5"></a-box>
 
-			<!-- Texto -->
-			<a-text value="¡AR funciona!" position="0 1 0" rotation="0 0 0" color="#FF0000" align="center"
+			<!-- Texto sobre la bandera -->
+			<a-text value="¡Viva México!" position="0 1 0" rotation="0 0 0" color="#006847" align="center"
 				width="2">
 			</a-text>
 
 		</a-marker>
 
-		<!-- Cámara con FOV correcto -->
-		<a-entity camera position="0 0 0" look-controls="enabled: false"></a-entity>
-
+		<!-- Cámara AR -->
+		<a-entity camera></a-entity>
 	</a-scene>
 
 </body>
