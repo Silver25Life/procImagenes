@@ -1,22 +1,20 @@
-<!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>AR.js Custom Marker - México</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
 	<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
 
-<body style="margin: 0; overflow: hidden;">
-	<a-scene embedded vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: true;">
-		<!-- Marcador personalizado -->
-		<a-marker type="pattern" url="markers/pattern-mexico.patt">
-			<a-box position="0 0.5 0" material="color: red;"></a-box>
-		</a-marker>
-
-		<a-entity camera></a-entity>
+<body>
+	<a-scene mindar-image="imageTargetSrc: ./targets.mind;" vr-mode-ui="enabled: false"
+		device-orientation-permission-ui="enabled: false">
+		<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+		<a-entity mindar-image-target="targetIndex: 0">
+			<a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1"
+				rotation="0 0 0"></a-plane>
+		</a-entity>
 	</a-scene>
 </body>
 
