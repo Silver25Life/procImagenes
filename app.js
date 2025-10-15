@@ -241,35 +241,87 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	});
 
-	// ===== MINDAR EVENTS =====
+	// ===== MINDAR EVENTS - VERSIÓN CORREGIDA =====
 	const scene = document.querySelector("a-scene");
 
 	if (scene) {
-		scene.addEventListener("loaded", function() {
-			console.log("🚀 Escena A-Frame cargada correctamente");
+		// Esperar a que MindAR esté completamente listo
+		scene.addEventListener("renderstart", function() {
+			console.log("🚀 MindAR iniciado - Escucha de eventos activada");
 
-			// Evento cuando se encuentra un target
-			scene.addEventListener("mindar-target-found", function(event) {
-				const targetIndex = event.detail.targetIndex;
-				activeTarget = targetIndex;
-				mostrarBotonTrivia();
-				console.log("🎯 Target REAL encontrado:", targetIndex);
+			// Obtener las entidades de los targets directamente
+			const mexicoTarget = document.querySelector("#mexicoTarget");
+			const usaTarget = document.querySelector("#usaTarget");
+
+			console.log("🎯 Targets encontrados:", {
+				mexico: mexicoTarget,
+				usa: usaTarget
 			});
 
-			// Evento cuando se pierde un target
+			// Eventos para México
+			if (mexicoTarget) {
+				mexicoTarget.addEventListener("targetFound", function(event) {
+					console.log("🇲🇽 Target México DETECTADO");
+					activeTarget = 0;
+					mostrarBotonTrivia();
+				});
+
+				mexicoTarget.addEventListener("targetLost", function(event) {
+					console.log("🇲🇽 Target México PERDIDO");
+					if (activeTarget === 0) {
+						activeTarget = null;
+						ocultarBotonTrivia();
+					}
+				});
+			}
+
+			// Eventos para USA
+			if (usaTarget) {
+				usaTarget.addEventListener("targetFound", function(event) {
+					console.log("🇺🇸 Target USA DETECTADO");
+					activeTarget = 1;
+					mostrarBotonTrivia();
+				});
+
+				usaTarget.addEventListener("targetLost", function(event) {
+					console.log("🇺🇸 Target USA PERDIDO");
+					if (activeTarget === 1) {
+						activeTarget = null;
+						ocultarBotonTrivia();
+					}
+				});
+			}
+
+			// También escuchar eventos globales de la escena por si acaso
+			scene.addEventListener("mindar-target-found", function(event) {
+				const targetIndex = event.detail.targetIndex;
+				console.log("🎯 Target encontrado (evento global):", targetIndex);
+				activeTarget = targetIndex;
+				mostrarBotonTrivia();
+			});
+
 			scene.addEventListener("mindar-target-lost", function(event) {
 				const targetIndex = event.detail.targetIndex;
+				console.log("🎯 Target perdido (evento global):", targetIndex);
 				if (activeTarget === targetIndex) {
 					activeTarget = null;
 					ocultarBotonTrivia();
-					console.log("🎯 Target REAL perdido:", targetIndex);
 				}
 			});
 		});
 
+		// Manejar errores
 		scene.addEventListener("error", function(event) {
 			console.error("❌ Error en la escena A-Frame:", event.detail);
 		});
+
+		// Verificar si MindAR está cargado
+		const mindarSystem = scene.systems["mindar-image-system"];
+		if (mindarSystem) {
+			console.log("✅ Sistema MindAR detectado");
+		} else {
+			console.warn("⚠️ Sistema MindAR no detectado");
+		}
 	} else {
 		console.error("❌ No se encontró la escena A-Frame");
 	}
@@ -277,4 +329,5 @@ document.addEventListener("DOMContentLoaded", function() {
 	// ===== INICIALIZACIÓN COMPLETADA =====
 	console.log("✅ Aplicación AR Trivia con opciones múltiples inicializada");
 	console.log("💡 Usa los botones de simulación para probar sin cámara");
+	console.log("📱 O apunta la cámara a las banderas para AR real");
 });
