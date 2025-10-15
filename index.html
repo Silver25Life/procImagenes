@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+
+<body>
+	<a-scene mindar-image="aqui va el url" vr-mode-ui="enabled: false"
+		device-orientation-permission-ui="enabled: false">
+		<a-camera position="0 0 0" look controls="enabled: false"></a-camera>
+		<a-entity mindar-image-target="targetIndex: 0">
+			<a-sphere position="0 0 0" radius="0.25" color="#EF2D5E"></a-sphere>
+	</a-scene>
+</body>
+
+</html>
