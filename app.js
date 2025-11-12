@@ -128,45 +128,42 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 
-	// --- ANIMAR BANDERA (ROTACIÓN SIMPLE) ---
-	let banderaGirando = false;
+	// --- ANIMAR MODELO 3D (ROTACIÓN) ---
+	let modeloGirando = false;
 
-	const escena = document.querySelector("a-scene");
-	escena.addEventListener("loaded", () => {
-		console.log("🌎 Escena A-Frame cargada completamente");
+	animButton.addEventListener("click", () => {
+		if (!currentCountry) {
+			alert("Escanea una bandera primero 🇲🇽🇺🇸");
+			return;
+		}
 
-		animButton.addEventListener("click", () => {
-			if (!currentCountry) {
-				alert("Escanea una bandera primero 🇲🇽🇺🇸");
-				return;
-			}
+		const modeloId = currentCountry === "mexico" ? "#modeloMexico" : "#modeloUSA";
+		const modelo = document.querySelector(modeloId);
 
-			const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
-			const bandera = document.querySelector(banderaId);
+		if (!modelo) {
+			console.warn("⚠️ No se encontró el modelo 3D para animar");
+			return;
+		}
 
-			if (!bandera) {
-				console.warn("⚠️ No se encontró la bandera para animar");
-				return;
-			}
-
-			if (!banderaGirando) {
-				// Aplica rotación continua
-				bandera.setAttribute("animation__rotar", {
-					property: "rotation",
-					to: "0 360 0",
-					loop: "true",
-					dur: 6000,
-					easing: "linear"
-				});
-				console.log("🔄 Bandera girando");
-				banderaGirando = true;
-			} else {
-				// Detiene la rotación
-				bandera.removeAttribute("animation__rotar");
-				console.log("🛑 Rotación detenida");
-				banderaGirando = false;
-			}
-		});
+		if (!modeloGirando) {
+			// Aplica rotación continua al modelo 3D
+			modelo.setAttribute("animation", {
+				property: "rotation",
+				to: "0 360 0",
+				loop: true,
+				dur: 3000,
+				easing: "linear"
+			});
+			console.log("🔄 Modelo 3D girando");
+			modeloGirando = true;
+			animButton.textContent = "Detener Animación";
+		} else {
+			// Detiene la rotación
+			modelo.removeAttribute("animation");
+			console.log("🛑 Rotación detenida");
+			modeloGirando = false;
+			animButton.textContent = "Animar Modelo";
+		}
 	});
 
 	// Activar / desactivar animación de bandera según marcador

@@ -54,16 +54,12 @@
 		vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
 		<!-- México -->
 		<a-entity mindar-image-target="targetIndex: 0" id="mexicoTarget">
-			<!-- México -->
-			<!-- México -->
 			<a-plane id="banderaMexico" src="#mexicoImg" height="0.5" width="0.8"
 				rotation="0 0 0"></a-plane>
-
-
 			<a-entity text="value: ¡Viva México!; align: center; color: #00FF00; width: 2"
 				position="0 0.6 0"></a-entity>
-			<a-entity id="modeloMexico" gltf-model="#modelo3D" position="0 -0.3 0"
-				scale="0.3 0.3 0.3"></a-entity>
+			<a-entity id="modeloMexico" gltf-model="#modelo3D" position="0 -0.3 0" scale="0.3 0.3 0.3"
+				rotation="0 0 0"></a-entity>
 		</a-entity>
 
 		<a-assets>
@@ -76,14 +72,13 @@
 
 		<!-- USA -->
 		<a-entity mindar-image-target="targetIndex: 1" id="usaTarget">
-			<!-- USA -->
 			<a-plane id="banderaUSA" src="#usaImg" height="0.5" width="0.8" rotation="0 0 0"></a-plane>
-
 			<a-entity text="value: United We Stand; align: center; color: #0000FF; width: 2"
 				position="0 0.6 0"></a-entity>
-			<a-entity id="modeloUSA" gltf-model="#modelo3D" position="0 -0.3 0"
-				scale="0.3 0.3 0.3"></a-entity>
+			<a-entity id="modeloUSA" gltf-model="#modelo3D" position="0 -0.3 0" scale="0.3 0.3 0.3"
+				rotation="0 0 0"></a-entity>
 		</a-entity>
+
 	</a-scene>
 
 	<script src="app.js"></script>
