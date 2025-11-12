@@ -148,9 +148,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		if (!banderaOndeando) {
 			// Para un ondeo más exagerado
 			bandera.setAttribute("flag-wave", {
-				amplitude: 0.05,    // Olas más altas
-				speed: 4,          // Más rápido
-				frequency: 12      // Más olas
+				amplitude: 0.035,    // Olas más altas
+				speed: 6,          // Más rápido
+				frequency: 10      // Más olas
 			});
 
 			console.log("🎌 Bandera ondeando");
