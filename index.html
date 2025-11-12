@@ -10,6 +10,50 @@
 	<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
+	<!-- Componente de onda para banderas -->
+	<script>
+		AFRAME.registerComponent('flag-wave', {
+			schema: {
+				amplitude: {type: 'number', default: 0.05},
+				speed: {type: 'number', default: 2},
+				frequency: {type: 'number', default: 5}
+			},
+			init: function () {
+				this.vertices = null;
+				this.originalPositions = null;
+				this.time = 0;
+			},
+			tick: function (time) {
+				this.time = time / 1000; // Convertir a segundos
+				this.waveEffect();
+			},
+			waveEffect: function () {
+				const mesh = this.el.getObject3D('mesh');
+				if (!mesh) return;
+
+				const geometry = mesh.geometry;
+				if (!this.vertices) {
+					this.vertices = geometry.attributes.position.array;
+					this.originalPositions = this.vertices.slice();
+				}
+
+				const data = this.data;
+
+				for (let i = 0; i < this.vertices.length; i += 3) {
+					const x = this.originalPositions[i];
+					const z = this.originalPositions[i + 2];
+
+					// Efecto de onda basado en la posición X y el tiempo
+					const wave = Math.sin(x * data.frequency + this.time * data.speed) * data.amplitude;
+					this.vertices[i + 1] = this.originalPositions[i + 1] + wave;
+				}
+
+				geometry.attributes.position.needsUpdate = true;
+				geometry.computeVertexNormals();
+			}
+		});
+	</script>
+
 	<!-- CSS -->
 	<link rel="stylesheet" href="style.css">
 </head>

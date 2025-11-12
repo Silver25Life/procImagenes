@@ -128,8 +128,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 
-	// --- ANIMAR MODELO 3D (ROTACIÓN) ---
+	// --- ANIMACIONES ---
 	let modeloGirando = false;
+	let banderaOndeando = false;
 
 	animButton.addEventListener("click", () => {
 		if (!currentCountry) {
@@ -137,48 +138,77 @@ document.addEventListener("DOMContentLoaded", function() {
 			return;
 		}
 
+		const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
 		const modeloId = currentCountry === "mexico" ? "#modeloMexico" : "#modeloUSA";
+		const bandera = document.querySelector(banderaId);
 		const modelo = document.querySelector(modeloId);
 
-		if (!modelo) {
-			console.warn("⚠️ No se encontró el modelo 3D para animar");
+		if (!bandera || !modelo) {
+			console.warn("⚠️ No se encontraron los elementos para animar");
 			return;
 		}
 
-		if (!modeloGirando) {
-			// Aplica rotación continua al modelo 3D
+		// Alternar entre animaciones
+		if (!banderaOndeando && !modeloGirando) {
+			// Activar ondeo de bandera
+			bandera.setAttribute("flag-wave", {
+				amplitude: 0.03,
+				speed: 3,
+				frequency: 8
+			});
+
+			// Activar rotación del modelo
 			modelo.setAttribute("animation", {
 				property: "rotation",
 				to: "0 360 0",
 				loop: true,
-				dur: 3000,
+				dur: 4000,
 				easing: "linear"
 			});
-			console.log("🔄 Modelo 3D girando");
+
+			console.log("🎌 Bandera ondeando y modelo girando");
+			banderaOndeando = true;
 			modeloGirando = true;
-			animButton.textContent = "Detener Animación";
+			animButton.textContent = "Detener Animaciones";
+
 		} else {
-			// Detiene la rotación
+			// Detener todas las animaciones
+			bandera.removeAttribute("flag-wave");
 			modelo.removeAttribute("animation");
-			console.log("🛑 Rotación detenida");
+
+			console.log("🛑 Animaciones detenidas");
+			banderaOndeando = false;
 			modeloGirando = false;
 			animButton.textContent = "Animar Modelo";
 		}
 	});
 
-	// Activar / desactivar animación de bandera según marcador
+	// Activar ondeo automáticamente cuando se detecta el marcador
 	["mexicoTarget", "usaTarget"].forEach(id => {
 		const target = document.getElementById(id);
-		const plane = target.querySelector("a-plane");
+		const bandera = target.querySelector("a-plane");
 
 		target.addEventListener("targetFound", () => {
-			console.log(`🎌 ${id} detectado — activando ondeo`);
-			plane.setAttribute("flag-wave", "amplitude:0.025; speed:3; frequency:8");
+			console.log(`🎌 ${id} detectado — activando ondeo automático`);
+			bandera.setAttribute("flag-wave", {
+				amplitude: 0.02,
+				speed: 2,
+				frequency: 6
+			});
 		});
 
 		target.addEventListener("targetLost", () => {
 			console.log(`🏁 ${id} perdido — deteniendo ondeo`);
-			plane.removeAttribute("flag-wave");
+			bandera.removeAttribute("flag-wave");
+			// También detener rotación del modelo si estaba activa
+			const modelo = target.querySelector("[gltf-model]");
+			if (modelo) {
+				modelo.removeAttribute("animation");
+			}
+			// Resetear estados
+			banderaOndeando = false;
+			modeloGirando = false;
+			animButton.textContent = "Animar Modelo";
 		});
 	});
 });
