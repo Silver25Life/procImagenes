@@ -98,11 +98,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// --- VIDEO NORMAL ---
 	videoButton.addEventListener("click", () => {
-		videoElement.src = currentCountry === "mexico" ? "mexico.mp4" : "usa.mp4";
+		if (!currentCountry) {
+			alert("Escanea una bandera primero 🇲🇽🇺🇸");
+			return;
+		}
+
+		// Selecciona el video según el país detectado
+		if (currentCountry === "mexico") {
+			videoElement.src = "mexico.mp4";
+		} else if (currentCountry === "usa") {
+			videoElement.src = "usa.mp4";
+		} else {
+			alert("No hay video disponible para este país.");
+			return;
+		}
+
 		videoElement.style.display = "block";
 		videoElement.play();
 	});
-	videoElement.addEventListener("ended", () => (videoElement.style.display = "none"));
+
+	// Oculta el video cuando termine
+	videoElement.addEventListener("ended", () => {
+		videoElement.style.display = "none";
+	});
+	// cerrar video manualmente
+	videoElement.addEventListener("click", () => {
+		videoElement.pause();
+		videoElement.style.display = "none";
+	});
+
 
 	// --- ANIMAR MODELO 3D ---
 	animButton.addEventListener("click", () => {
