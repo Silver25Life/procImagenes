@@ -10,116 +10,112 @@ document.addEventListener("DOMContentLoaded", function() {
 	const opcion1 = document.getElementById("opcion1");
 	const opcion2 = document.getElementById("opcion2");
 	const opcion3 = document.getElementById("opcion3");
-	const closeModal = document.getElementById("closeModal");
-	const resultadoDiv = document.getElementById("resultado");
 
 	// Base de datos de trivias con opciones múltiples
+	// --- TRIVIAS ---
 	const trivias = {
-		0: [ // México
-			{
-				pregunta: "¿Cuál es la capital de México?",
-				opciones: [
-					"Guadalajara",
-					"Ciudad de México",
-					"Monterrey"
-				],
-				correcta: 1
-			},
-			{
-				pregunta: "¿Cuál es el platillo típico de México?",
-				opciones: [
-					"Pizza",
-					"Sushi",
-					"Tacos"
-				],
-				correcta: 2
-			},
-			{
-				pregunta: "¿En qué año México ganó su independencia?",
-				opciones: [
-					"1776",
-					"1810",
-					"1848"
-				],
-				correcta: 1
-			},
-			{
-				pregunta: "¿Cuál es la moneda de México?",
-				opciones: [
-					"Dólar",
-					"Euro",
-					"Peso Mexicano"
-				],
-				correcta: 2
-			},
-			{
-				pregunta: "¿Qué celebra México el 16 de septiembre?",
-				opciones: [
-					"Día de la Revolución",
-					"Día de la Independencia",
-					"Día de la Bandera"
-				],
-				correcta: 1
-			}
+		mexico: [
+			{ pregunta: "¿Qué significa el color verde de la bandera mexicana?", opciones: ["Esperanza", "Independencia", "Naturaleza"], correcta: 1 },
+			{ pregunta: "¿Qué animal aparece en el escudo?", opciones: ["Águila", "Jaguar", "Serpiente"], correcta: 1 },
+			{ pregunta: "¿En qué año se adoptó la bandera actual?", opciones: ["1821", "1917", "1968"], correcta: 3 },
+			{ pregunta: "¿Qué sostiene el águila?", opciones: ["Una serpiente", "Una rama", "Un cactus"], correcta: 1 },
+			{ pregunta: "¿Cuántos colores tiene la bandera?", opciones: ["3", "4", "5"], correcta: 1 }
 		],
-		1: [ // USA
-			{
-				pregunta: "¿Cuál es la capital de Estados Unidos?",
-				opciones: [
-					"Nueva York",
-					"Washington D.C.",
-					"Los Ángeles"
-				],
-				correcta: 1
-			},
-			{
-				pregunta: "¿Cuál es el símbolo nacional de USA?",
-				opciones: [
-					"El oso pardo",
-					"El águila calva",
-					"El búho"
-				],
-				correcta: 1
-			},
-			{
-				pregunta: "¿Cuántas estrellas tiene la bandera de USA?",
-				opciones: [
-					"48",
-					"50",
-					"52"
-				],
-				correcta: 1
-			},
-			{
-				pregunta: "¿Quién fue el primer presidente de USA?",
-				opciones: [
-					"Thomas Jefferson",
-					"Abraham Lincoln",
-					"George Washington"
-				],
-				correcta: 2
-			},
-			{
-				pregunta: "¿En qué continente se encuentra USA?",
-				opciones: [
-					"Europa",
-					"América del Norte",
-					"Asia"
-				],
-				correcta: 1
-			}
+		usa: [
+			{ pregunta: "¿Cuántas estrellas tiene la bandera de EE.UU.?", opciones: ["50", "51", "52"], correcta: 1 },
+			{ pregunta: "¿Qué representan las franjas rojas y blancas?", opciones: ["Los estados", "Las colonias originales", "Las guerras"], correcta: 2 },
+			{ pregunta: "¿Cuál es el apodo de la bandera?", opciones: ["Old Glory", "Star Power", "Freedom Flag"], correcta: 1 },
+			{ pregunta: "¿De qué color es la franja superior?", opciones: ["Blanca", "Roja", "Azul"], correcta: 2 },
+			{ pregunta: "¿Cuándo se adoptó la bandera actual?", opciones: ["1777", "1812", "1960"], correcta: 3 }
 		]
 	};
 
-	function mostrarBotonTrivia() {
-		triviaButton.style.display = "block";
-		console.log("🟢 Botón de trivia mostrado");
-	}
+	let currentCountry = null;
 
-	function ocultarBotonTrivia() {
-		triviaButton.style.display = "none";
-		console.log("🔴 Botón de trivia ocultado");
+	// --- ELEMENTOS UI ---
+	const triviaBtn = document.getElementById("triviaButton");
+	const modal = document.getElementById("triviaModal");
+	const closeModal = document.getElementById("closeModal");
+	const resultadoDiv = document.getElementById("resultado");
+	const videoElement = document.getElementById("countryVideo");
+	const filterButton = document.getElementById("filterButton");
+	const animButton = document.getElementById("animButton");
+	const videoButton = document.getElementById("videoButton");
+
+	// --- ESCUCHAR TARGETS ---
+	document.querySelector("#mexicoTarget").addEventListener("targetFound", () => {
+		currentCountry = "mexico";
+		triviaBtn.style.display = "block";
+	});
+	document.querySelector("#usaTarget").addEventListener("targetFound", () => {
+		currentCountry = "usa";
+		triviaBtn.style.display = "block";
+	});
+	document.querySelector("#mexicoTarget").addEventListener("targetLost", () => triviaBtn.style.display = "none");
+	document.querySelector("#usaTarget").addEventListener("targetLost", () => triviaBtn.style.display = "none");
+
+	// --- MOSTRAR TRIVIA ---
+	triviaBtn.addEventListener("click", () => {
+		if (!currentCountry) return;
+		const paisTrivias = trivias[currentCountry];
+		const trivia = paisTrivias[Math.floor(Math.random() * paisTrivias.length)];
+		mostrarTrivia(trivia);
+	});
+
+	function mostrarTrivia(t) {
+		modal.style.display = "block";
+		document.getElementById("preguntaText").innerText = t.pregunta;
+		document.getElementById("opcion1").innerText = t.opciones[0];
+		document.getElementById("opcion2").innerText = t.opciones[1];
+		document.getElementById("opcion3").innerText = t.opciones[2];
+		resultadoDiv.innerText = "";
+
+		document.querySelectorAll(".opcion-btn").forEach(btn => {
+			btn.classList.remove("correcta", "incorrecta");
+			btn.onclick = () => {
+				const seleccion = parseInt(btn.dataset.opcion);
+				if (seleccion === t.correcta) {
+					btn.classList.add("correcta");
+					resultadoDiv.textContent = "✅ ¡Correcto!";
+					resultadoDiv.className = "resultado correcto";
+				} else {
+					btn.classList.add("incorrecta");
+					resultadoDiv.textContent = "❌ Incorrecto";
+					resultadoDiv.className = "resultado incorrecto";
+				}
+			};
+		});
 	}
+	closeModal.onclick = () => (modal.style.display = "none");
+
+	// --- FILTROS DE CÁMARA ---
+	const filters = ["none", "grayscale(100%)", "sepia(80%)", "invert(100%)"];
+	let currentFilter = 0;
+	filterButton.addEventListener("click", () => {
+		currentFilter = (currentFilter + 1) % filters.length;
+		document.querySelector("a-scene").style.filter = filters[currentFilter];
+	});
+
+	// --- VIDEO NORMAL ---
+	videoButton.addEventListener("click", () => {
+		videoElement.src = currentCountry === "mexico" ? "mexico.mp4" : "usa.mp4";
+		videoElement.style.display = "block";
+		videoElement.play();
+	});
+	videoElement.addEventListener("ended", () => (videoElement.style.display = "none"));
+
+	// --- ANIMAR MODELO 3D ---
+	animButton.addEventListener("click", () => {
+		const modelId = currentCountry === "mexico" ? "#modeloMexico" : "#modeloUSA";
+		const model = document.querySelector(modelId);
+		model.setAttribute("animation", {
+			property: "rotation",
+			to: "0 360 0",
+			loop: false,
+			dur: 2000,
+			easing: "easeInOutQuad"
+		});
+	});
 
 	// ===== FUNCIONES DE TRIVIA CON OPCIONES =====
 	function mostrarTrivia() {

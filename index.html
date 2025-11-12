@@ -15,8 +15,13 @@
 </head>
 
 <body>
-	<!-- Botón para mostrar trivia -->
-	<button id="triviaButton">Mostrar Trivia</button>
+	<!-- Botones -->
+	<div id="uiButtons">
+		<button id="triviaButton">Mostrar Trivia</button>
+		<button id="filterButton">Filtros</button>
+		<button id="videoButton">Ver Video</button>
+		<button id="animButton">Animar Modelo</button>
+	</div>
 
 	<!-- Modal de Trivia -->
 	<div id="triviaModal" class="modal">
@@ -25,45 +30,55 @@
 			<h3 id="preguntaText"></h3>
 			<div class="opciones-container">
 				<button class="opcion-btn" data-opcion="1">
-					<span class="opcion-letra">A</span>
-					<span class="opcion-texto" id="opcion1"></span>
+					<span class="opcion-letra">A</span><span class="opcion-texto"
+						id="opcion1"></span>
 				</button>
 				<button class="opcion-btn" data-opcion="2">
-					<span class="opcion-letra">B</span>
-					<span class="opcion-texto" id="opcion2"></span>
+					<span class="opcion-letra">B</span><span class="opcion-texto"
+						id="opcion2"></span>
 				</button>
 				<button class="opcion-btn" data-opcion="3">
-					<span class="opcion-letra">C</span>
-					<span class="opcion-texto" id="opcion3"></span>
+					<span class="opcion-letra">C</span><span class="opcion-texto"
+						id="opcion3"></span>
 				</button>
 			</div>
 			<div id="resultado" class="resultado"></div>
 		</div>
 	</div>
 
-	<!-- Escena AR -->
-	<a-scene mindar-image="imageTargetSrc: pais.mind; autoStart: true; maxTrack: 2; uiScanning: no; uiError: no;"
-		vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
+	<!-- Video Overlay -->
+	<video id="countryVideo" controls playsinline></video>
 
+	<!-- Escena AR -->
+	<a-scene mindar-image="imageTargetSrc: pais.mind; autoStart: true; uiScanning: no; uiError: no;"
+		vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
 		<a-assets>
-			<img id="mexicoImg" src="mexico.jpg" crossorigin="anonymous" />
-			<img id="usaImg" src="usa.jpg" crossorigin="anonymous" />
+			<img id="mexicoImg" src="mexico.jpg" />
+			<img id="usaImg" src="usa.jpg" />
+			<a-asset-item id="modelo3D" src="modelo.glb"></a-asset-item>
 		</a-assets>
 
 		<a-camera position="0 0 0" look-controls="enabled: false" active="true"></a-camera>
 
-		<!-- Targets -->
+		<!-- MEXICO -->
 		<a-entity mindar-image-target="targetIndex: 0" id="mexicoTarget">
-			<a-plane src="#mexicoImg" position="0 0 0" height="0.5" width="0.8" rotation="0 0 0"></a-plane>
+			<a-plane src="#mexicoImg" height="0.5" width="0.8"></a-plane>
+			<a-entity id="textMexico" text="value: ¡Viva México!; align: center; color: #00FF00; width: 2"
+				position="0 0.6 0"></a-entity>
+			<a-entity id="modeloMexico" gltf-model="#modelo3D" position="0 -0.3 0"
+				scale="0.3 0.3 0.3"></a-entity>
 		</a-entity>
 
+		<!-- USA -->
 		<a-entity mindar-image-target="targetIndex: 1" id="usaTarget">
-			<a-plane src="#usaImg" position="0 0 0" height="0.5" width="0.8" rotation="0 0 0"></a-plane>
+			<a-plane src="#usaImg" height="0.5" width="0.8"></a-plane>
+			<a-entity id="textUSA" text="value: United We Stand; align: center; color: #0000FF; width: 2"
+				position="0 0.6 0"></a-entity>
+			<a-entity id="modeloUSA" gltf-model="#modelo3D" position="0 -0.3 0"
+				scale="0.3 0.3 0.3"></a-entity>
 		</a-entity>
-
 	</a-scene>
 
-	<!-- JS -->
 	<script src="app.js"></script>
 </body>
 
