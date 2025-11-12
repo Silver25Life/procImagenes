@@ -128,12 +128,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 
-	// --- ANIMAR BANDERA CON BOTÓN "ANIMAR MODELO" ---
-	let banderaAnimando = false;
+	// --- ANIMAR BANDERA (ROTACIÓN SIMPLE) ---
+	let banderaGirando = false;
 
-	// Esperar a que A-Frame cargue completamente
 	const escena = document.querySelector("a-scene");
-
 	escena.addEventListener("loaded", () => {
 		console.log("🌎 Escena A-Frame cargada completamente");
 
@@ -143,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				return;
 			}
 
-			// Selecciona la bandera según el país actual
 			const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
 			const bandera = document.querySelector(banderaId);
 
@@ -152,23 +149,22 @@ document.addEventListener("DOMContentLoaded", function() {
 				return;
 			}
 
-			if (!banderaAnimando) {
-				// Activa la animación tipo ondeo
-				bandera.setAttribute("animation__ondeo", {
+			if (!banderaGirando) {
+				// Aplica rotación continua
+				bandera.setAttribute("animation__rotar", {
 					property: "rotation",
-					to: "10 0 0",
-					direction: "alternate",
-					dur: 4000,
-					repeat: "indefinite",
-					easing: "easeInOutSine"
+					to: "0 360 0",
+					loop: "true",
+					dur: 6000,
+					easing: "linear"
 				});
-				console.log("🎌 Bandera animada");
-				banderaAnimando = true;
+				console.log("🔄 Bandera girando");
+				banderaGirando = true;
 			} else {
-				// Detiene la animación
-				bandera.removeAttribute("animation__ondeo");
-				console.log("🏁 Bandera detenida");
-				banderaAnimando = false;
+				// Detiene la rotación
+				bandera.removeAttribute("animation__rotar");
+				console.log("🛑 Rotación detenida");
+				banderaGirando = false;
 			}
 		});
 	});
