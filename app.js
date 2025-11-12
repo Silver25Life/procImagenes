@@ -128,17 +128,42 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 
-	// --- ANIMAR MODELO 3D ---
+	// --- ANIMAR BANDERA CON BOTÓN "ANIMAR MODELO" ---
+	let banderaAnimando = false;
+
 	animButton.addEventListener("click", () => {
-		const modelId = currentCountry === "mexico" ? "#modeloMexico" : "#modeloUSA";
-		const model = document.querySelector(modelId);
-		model.setAttribute("animation", {
-			property: "rotation",
-			to: "0 360 0",
-			loop: false,
-			dur: 2000,
-			easing: "easeInOutQuad"
-		});
+		if (!currentCountry) {
+			alert("Escanea una bandera primero 🇲🇽🇺🇸");
+			return;
+		}
+
+		// Selecciona la bandera según el país
+		const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
+		const bandera = document.querySelector(banderaId);
+
+		if (!bandera) {
+			console.warn("⚠️ No se encontró la bandera para animar");
+			return;
+		}
+
+		if (!banderaAnimando) {
+			// Activar animación tipo ondeo
+			bandera.setAttribute("animation__ondeo", {
+				property: "rotation",
+				to: "10 0 0",
+				direction: "alternate",
+				dur: 4000,
+				repeat: "indefinite",
+				easing: "easeInOutSine"
+			});
+			console.log("🎌 Bandera animada");
+			banderaAnimando = true;
+		} else {
+			// Detener animación
+			bandera.removeAttribute("animation__ondeo");
+			console.log("🏁 Bandera detenida");
+			banderaAnimando = false;
+		}
 	});
 
 	// Activar / desactivar animación de bandera según marcador
