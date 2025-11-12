@@ -128,8 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 
-	// --- ANIMACIONES ---
-	let modeloGirando = false;
+	// --- ANIMACIÓN DE ONDEO DE BANDERA ---
 	let banderaOndeando = false;
 
 	animButton.addEventListener("click", () => {
@@ -139,76 +138,61 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 
 		const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
-		const modeloId = currentCountry === "mexico" ? "#modeloMexico" : "#modeloUSA";
 		const bandera = document.querySelector(banderaId);
-		const modelo = document.querySelector(modeloId);
 
-		if (!bandera || !modelo) {
-			console.warn("⚠️ No se encontraron los elementos para animar");
+		if (!bandera) {
+			console.warn("⚠️ No se encontró la bandera para animar");
 			return;
 		}
 
-		// Alternar entre animaciones
-		if (!banderaOndeando && !modeloGirando) {
-			// Activar ondeo de bandera
+		if (!banderaOndeando) {
+			// Para un ondeo más exagerado
 			bandera.setAttribute("flag-wave", {
-				amplitude: 0.03,
-				speed: 3,
-				frequency: 8
+				amplitude: 0.05,    // Olas más altas
+				speed: 4,          // Más rápido
+				frequency: 12      // Más olas
 			});
 
-			// Activar rotación del modelo
-			modelo.setAttribute("animation", {
-				property: "rotation",
-				to: "0 360 0",
-				loop: true,
-				dur: 4000,
-				easing: "linear"
-			});
-
-			console.log("🎌 Bandera ondeando y modelo girando");
+			console.log("🎌 Bandera ondeando");
 			banderaOndeando = true;
-			modeloGirando = true;
-			animButton.textContent = "Detener Animaciones";
+			animButton.textContent = "Detener Ondeo";
+			animButton.style.backgroundColor = "#f44336"; // Cambiar color a rojo cuando está activo
 
 		} else {
-			// Detener todas las animaciones
+			// Detener ondeo
 			bandera.removeAttribute("flag-wave");
-			modelo.removeAttribute("animation");
 
-			console.log("🛑 Animaciones detenidas");
+			console.log("🛑 Ondeo detenido");
 			banderaOndeando = false;
-			modeloGirando = false;
-			animButton.textContent = "Animar Modelo";
+			animButton.textContent = "Ondear Bandera";
+			animButton.style.backgroundColor = "#673ab7"; // Volver al color original
 		}
 	});
 
-	// Activar ondeo automáticamente cuando se detecta el marcador
+	// Ondeo automático cuando se detecta el marcador (opcional)
 	["mexicoTarget", "usaTarget"].forEach(id => {
 		const target = document.getElementById(id);
 		const bandera = target.querySelector("a-plane");
 
 		target.addEventListener("targetFound", () => {
-			console.log(`🎌 ${id} detectado — activando ondeo automático`);
-			bandera.setAttribute("flag-wave", {
-				amplitude: 0.02,
-				speed: 2,
-				frequency: 6
-			});
+			console.log(`🎌 ${id} detectado`);
+			// Si quieres que ondee automáticamente al detectar, descomenta esto:
+			// bandera.setAttribute("flag-wave", {
+			//     amplitude: 0.02,
+			//     speed: 2,
+			//     frequency: 6
+			// });
 		});
 
 		target.addEventListener("targetLost", () => {
-			console.log(`🏁 ${id} perdido — deteniendo ondeo`);
+			console.log(`🏁 ${id} perdido`);
+			// Detener ondeo automáticamente cuando se pierde el marcador
 			bandera.removeAttribute("flag-wave");
-			// También detener rotación del modelo si estaba activa
-			const modelo = target.querySelector("[gltf-model]");
-			if (modelo) {
-				modelo.removeAttribute("animation");
-			}
-			// Resetear estados
+
+			// Resetear estado del botón
 			banderaOndeando = false;
-			modeloGirando = false;
-			animButton.textContent = "Animar Modelo";
+			animButton.textContent = "Ondear Bandera";
+			animButton.style.backgroundColor = "#673ab7";
 		});
 	});
 });
