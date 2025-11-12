@@ -1,31 +1,3 @@
-// === Componente para animar bandera ===
-AFRAME.registerComponent('flag-wave', {
-	schema: {
-		amplitude: { type: 'number', default: 0.02 }, // altura de la onda
-		speed: { type: 'number', default: 3 },        // velocidad
-		frequency: { type: 'number', default: 6 }     // número de ondas
-	},
-	init: function() {
-		this.original = null;
-	},
-	tick: function(time) {
-		const mesh = this.el.getObject3D('mesh');
-		if (!mesh) return;
-
-		const positions = mesh.geometry.attributes.position;
-		if (!this.original) this.original = positions.array.slice(); // guarda posición original
-
-		for (let i = 0; i < positions.count; i++) {
-			const x = this.original[i * 3];
-			const y = this.original[i * 3 + 1];
-			const wave = Math.sin(x * this.data.frequency + time / 1000 * this.data.speed) * this.data.amplitude;
-			positions.setY(i, y + wave);
-		}
-		positions.needsUpdate = true;
-	}
-});
-
-
 document.addEventListener("DOMContentLoaded", function() {
 	console.log("✅ DOM Cargado - Iniciando aplicación AR Trivia");
 
