@@ -131,39 +131,46 @@ document.addEventListener("DOMContentLoaded", function() {
 	// --- ANIMAR BANDERA CON BOTÓN "ANIMAR MODELO" ---
 	let banderaAnimando = false;
 
-	animButton.addEventListener("click", () => {
-		if (!currentCountry) {
-			alert("Escanea una bandera primero 🇲🇽🇺🇸");
-			return;
-		}
+	// Esperar a que A-Frame cargue completamente
+	const escena = document.querySelector("a-scene");
 
-		// Selecciona la bandera según el país
-		const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
-		const bandera = document.querySelector(banderaId);
+	escena.addEventListener("loaded", () => {
+		console.log("🌎 Escena A-Frame cargada completamente");
 
-		if (!bandera) {
-			console.warn("⚠️ No se encontró la bandera para animar");
-			return;
-		}
+		animButton.addEventListener("click", () => {
+			if (!currentCountry) {
+				alert("Escanea una bandera primero 🇲🇽🇺🇸");
+				return;
+			}
 
-		if (!banderaAnimando) {
-			// Activar animación tipo ondeo
-			bandera.setAttribute("animation__ondeo", {
-				property: "rotation",
-				to: "10 0 0",
-				direction: "alternate",
-				dur: 4000,
-				repeat: "indefinite",
-				easing: "easeInOutSine"
-			});
-			console.log("🎌 Bandera animada");
-			banderaAnimando = true;
-		} else {
-			// Detener animación
-			bandera.removeAttribute("animation__ondeo");
-			console.log("🏁 Bandera detenida");
-			banderaAnimando = false;
-		}
+			// Selecciona la bandera según el país actual
+			const banderaId = currentCountry === "mexico" ? "#banderaMexico" : "#banderaUSA";
+			const bandera = document.querySelector(banderaId);
+
+			if (!bandera) {
+				console.warn("⚠️ No se encontró la bandera para animar");
+				return;
+			}
+
+			if (!banderaAnimando) {
+				// Activa la animación tipo ondeo
+				bandera.setAttribute("animation__ondeo", {
+					property: "rotation",
+					to: "10 0 0",
+					direction: "alternate",
+					dur: 4000,
+					repeat: "indefinite",
+					easing: "easeInOutSine"
+				});
+				console.log("🎌 Bandera animada");
+				banderaAnimando = true;
+			} else {
+				// Detiene la animación
+				bandera.removeAttribute("animation__ondeo");
+				console.log("🏁 Bandera detenida");
+				banderaAnimando = false;
+			}
+		});
 	});
 
 	// Activar / desactivar animación de bandera según marcador
